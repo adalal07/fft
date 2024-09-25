@@ -1,0 +1,705 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Project 2: Fun with Filters and Frequencies!</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="10c0aaf5-eccb-80bf-923e-f5921f055e8a" class="page sans"><header><h1 class="page-title">Project 2: <strong>Fun with Filters and Frequencies!</strong></h1><p class="page-description"></p></header><div class="page-body"><h1 id="10c0aaf5-eccb-807e-b302-c7305f839ae4" class="">Part 1: <strong>Fun with Filters</strong></h1><p id="10c0aaf5-eccb-8085-a158-eb1fa9b89e00" class="">In this part, we will build intuitions about 2D convolutions and filtering.</p><h2 id="10c0aaf5-eccb-80d1-88e5-e8b787f1199f" class="">1.1: <strong>Finite Difference Operator</strong></h2><p id="10c0aaf5-eccb-80ca-b8fe-c475a4b8af1c" class="">Finite Difference Operators a very common way to calculate the derivatives of images, which is very important information when dealing with image processing. While there are many different types of operators, we are going to be using the following:</p><figure id="10c0aaf5-eccb-80f4-ad40-e215ac1c27f2" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>D</mi><mi>x</mi></msub><mo>=</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mspace width="2em"/><msub><mi>D</mi><mi>y</mi></msub><mo>=</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">D_x = [1, -1]\qquad D_y = [1, -1]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:2em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1413em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="10c0aaf5-eccb-80d4-ac43-fad753e0ac41" class="">As an example, we will be using a grayscale image of a camera man taking a picture.</p><figure id="10c0aaf5-eccb-80c6-b4f2-fea0957a192d" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/cameraman.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/cameraman.png"/></a><figcaption>Figure 1.1: Original grayscale camera man image</figcaption></figure><p id="10c0aaf5-eccb-8009-8ae0-ce92ff23c5c3" class="">The goal of this exercise is to extract the edges of the images, similar to an edge detection filter. To accomplish this, we need to break our process into a few steps. </p><p id="10c0aaf5-eccb-8043-be31-cb3ddc7eb442" class="">
+</p><p id="10c0aaf5-eccb-8073-be8d-dd1e44963992" class="">First, we start by getting the partial derivatives of the image using the finite difference operators defined above. This involves utilizing the <code>scipy.signal.convolve2d</code> function, which allows us to pass in two 2D arrays, convolving the first one with the second. In our case, the image will be our first argument and we will need to perform two separate convolutions, one for <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">D_x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> and another for <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">D_y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>. The results are the following:</p><div id="10c0aaf5-eccb-806f-87ff-c4a87bccecb4" class="column-list"><div id="8fe6da53-8e0c-4ce6-aef3-e172b74d852e" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80d4-8bbf-c2afce54e157" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/partial_xder.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/partial_xder.png"/></a><figcaption>Figure 1.2: The partial x derivative of the camera man image. </figcaption></figure></div><div id="972695cb-42fc-4541-a756-e5e5c13b4c97" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80e6-8e3c-c92f3642bf2d" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/partial_yder.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/partial_yder.png"/></a><figcaption>Figure 1.3: The partial y derivative of the camera man image.</figcaption></figure></div></div><p id="10c0aaf5-eccb-808c-93ae-d8250150a7e8" class="">In Figure 2 and 3, we can see the two image derivatives highlight two slightly different sets of edges, where the partial x derivative shows us the edges along the horizontal grain of the image (left-to-right) and the partial y derivative show us edges along the orthogonal grain (top-to-bottom). </p><p id="10c0aaf5-eccb-8022-8f35-f1f107f29c46" class="">
+</p><p id="10c0aaf5-eccb-8007-bc16-fe8d8d4419dc" class="">Next, we need to calculate the the gradient magnitude image, which shows us the total set of edges from both of the partial derivatives. We calculate the gradient magnitude image by computing an L2-norm of the gradient, which is made up of the individual partial derivatives.</p><figure id="10c0aaf5-eccb-807d-8cf3-dbca7cd2e2bc" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_reg.png"><img style="width:384px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_reg.png"/></a><figcaption>Figure 1.4: The gradient magnitude image for the partial derivatives in Figure 1.2 and 1.3</figcaption></figure><p id="10c0aaf5-eccb-806f-8f33-f69517c9765b" class="">While this is a good edge detection algorithm so far, we need to remove the unnecessary noise that we see in this image, making our more significant edges more prominent. To do this, we can normalize our image first and then binarize using <code>THRESHOLD = 0.0057</code>.</p><figure id="10c0aaf5-eccb-806c-b54c-fa1a3d2be8ed" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_reg_thresh.png"><img style="width:384px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_reg_thresh.png"/></a><figcaption>Figure 1.5: The binarized gradient magnitude image with a THRESHOLD = 0.0057</figcaption></figure><p id="10c0aaf5-eccb-80a1-a8f6-e36845893d8b" class="">From the image, we can tell that a lot of the edges are a little coarse and sparse since there was a need to balance the amount of noise we see while having the edges visible. In other words, our result is still noisy. However, there is workaround for this problem using Gaussian Filters.</p><h2 id="10c0aaf5-eccb-80bc-a2f6-d1d0978620d6" class="">1.2: <strong>Derivative of Gaussian (DoG) Filter</strong></h2><p id="10c0aaf5-eccb-801d-903d-e34ae17e55ba" class="">A Gaussian Filter is a commonly-used linear smoothing filter that blurs images and reduces noise. In this case, we construct a Gaussian Filter using <code>cv2.getGaussianKernel</code> , which returns a 1D gaussian distribution defined by the aperture size,<code>ksize</code>, and standard deviation, <code>sigma</code>. We can compute a 2D Gaussian distribution by taking the outer product of a 1D Gaussian with itself.</p><p id="10c0aaf5-eccb-8070-86ca-cb8ac19b65de" class="">Now that we have defined our gaussian filter, we can smooth out of camera man image by convolving the original image with our newly create 2D Gaussian filter.</p><figure id="10c0aaf5-eccb-80c6-b030-e59fd3549375" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/cameraman_blur.png"><img style="width:384px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/cameraman_blur.png"/></a><figcaption>Figure 1.6: Gaussian blurred camera man image</figcaption></figure><p id="10c0aaf5-eccb-80c5-a93d-d140e4b9383b" class="">After blurring the image, we can follow the same steps as before to see what our partial derivative images and computed gradient magnitude image look like.</p><div id="10c0aaf5-eccb-80e2-a3c6-c6a88f142ecb" class="column-list"><div id="64936b0d-3750-4015-b3b2-a27ddf6d0ce5" style="width:49.99999999999999%" class="column"><figure id="10c0aaf5-eccb-8041-b10a-d16afe7ca5dc" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blur_partialx.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blur_partialx.png"/></a><figcaption>Figure 1.7: The partial x derivative of the blurred camera man image. </figcaption></figure></div><div id="c415ec21-d78f-4fba-bdff-410056016abe" style="width:49.99999999999999%" class="column"><figure id="10c0aaf5-eccb-8022-9e21-f11ae4c30937" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blur_partialy.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blur_partialy.png"/></a><figcaption>Figure 1.8: The partial y derivative of the blurred camera man image. </figcaption></figure><p id="10c0aaf5-eccb-8016-b5c5-db26145ffea8" class="">
+</p></div></div><figure id="10c0aaf5-eccb-80e2-93dc-f69d3ea69242" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_blur.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_blur.png"/></a><figcaption>Figure 1.9: The gradient magnitude image for the partial derivatives in Figure 1.7 and 1.8</figcaption></figure><p id="10c0aaf5-eccb-8053-aad1-ea945013fcf3" class="">From the above images, we can quickly tell that the edges are much more apparent in both the individual partial derivatives and the gradient magnitude image computed from the previous two. While our first algorithm captured many more finer details, this also meant we captured extra noise that we didn’t want. In this second iteration, we smooth out those finer details, making the edge detection much more clear. The final binarized and thresholded image looks like:</p><figure id="10c0aaf5-eccb-80fe-b1da-d5f909a38f1d" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_blur_thres.png"><img style="width:384px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_blur_thres.png"/></a><figcaption>Figure 1.10: The binarized gradient magnitude image with a THRESHOLD = 0.0035</figcaption></figure><p id="10c0aaf5-eccb-803e-85f0-c9dec83f5f80" class="">The threshold in this case was a little over half of the previous method, showing us the difference in pixel values with blurring. During this process, we needed to perform two different convolutions, one with the gaussian filter and then one with each of the finite difference operators. However, what if we first find the derivative of the gaussian (DoG) filter and then apply that to the original image directly.</p><p id="10c0aaf5-eccb-8058-91d4-f69aea76969c" class="">
+</p><p id="10c0aaf5-eccb-8009-9c9e-e346dcc6bea7" class="">The DoG filter is obtained by convolving the constructed 2D gaussian filter with each of the finite difference operators we defined earlier. Through these convolutions, we get the following visualizations showing the derivative of the 2D gaussian distribution.</p><div id="10c0aaf5-eccb-8004-b404-cbe018c773d9" class="column-list"><div id="68ad76d3-c375-402c-8e9c-67f1b995c151" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8090-a0cc-dffcd6df5575" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DoGX.png"><img style="width:330.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DoGX.png"/></a><figcaption>Figure 1.11: The partial derivative of the Gaussian Filter in the x-direction</figcaption></figure></div><div id="2c9865d9-0718-4f94-a220-8af3fa24c836" style="width:50%" class="column"><figure id="10c0aaf5-eccb-800c-b503-e176500430ab" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DoGy.png"><img style="width:330.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DoGy.png"/></a><figcaption>Figure 1.12: The partial derivative of the Gaussian Filter in the y-direction</figcaption></figure></div></div><p id="10c0aaf5-eccb-80b3-8b73-d9c9368f5b0e" class="">With these plots, we are able to grasp the shape of the 2D gaussian filter, including the parameters that define the distribution. Convolving our original image with these two derivatives, we get the same result as our regular 2D Gaussian Filter as expected.</p><div id="10c0aaf5-eccb-8092-baea-f707134c24e8" class="column-list"><div id="6c679abf-d68c-4cfb-bf67-aacfcd19188c" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80bb-b0eb-cd54f8d0f422" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_dog.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_dog.png"/></a><figcaption>Figure 1.13: The gradient magnitude image for the partial derivatives calculated using DoG</figcaption></figure><p id="10c0aaf5-eccb-80dc-b503-eae6e9679dba" class="">
+</p></div><div id="8ad04d07-dfb0-49ee-b059-081a9ef28d49" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8007-ba0f-fa18036c7b28" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_dog_threh.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gradient_mag_dog_threh.png"/></a><figcaption>Figure 1.14: The binarized gradient magnitude image calculated using DoG with a THRESHOLD = 0.0035</figcaption></figure></div></div><h1 id="10c0aaf5-eccb-806d-aa6b-e1f03194d3c2" class="">Part 2: <strong>Fun with Frequencies!</strong></h1><h2 id="10c0aaf5-eccb-80a0-8f88-d6f1ee57032a" class="">2.1: <strong>Image &quot;Sharpening&quot;</strong></h2><p id="10c0aaf5-eccb-809c-a6e5-e5ee6a51955b" class="">In this section, we will be performing image sharpening, an image processing technique to amplify the high frequencies in an image. A common filter used for this operation is the unsharp mask filter, which we will define through this section’s process. As an example, we will be using the following image of the Taj Mahal for our exploration.</p><figure id="10c0aaf5-eccb-80cd-9b97-fc132abc2878" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/p2.1.jpg"><img style="width:300px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/p2.1.jpg"/></a><figcaption>Figure 2.1.1: Original image of the Taj Mahal</figcaption></figure><p id="10c0aaf5-eccb-8049-be30-e988609d8548" class="">To perform image sharpening, we need to extract the higher frequencies from the image. We have already defined a Gaussian Filter that lets us filter out the higher frequencies, leaving only lower frequencies. To get the high frequencies, we can then just logically subtract our gaussian blurred image from the original Taj Mahal image.</p><div id="10c0aaf5-eccb-80ab-be1a-d3d2eac1dcc8" class="column-list"><div id="320148d7-ac9b-454c-b2ea-efc0e6e67177" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8017-b51b-f3b6b38dd4e9" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_blur.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_blur.png"/></a><figcaption>Figure 2.1.2: The Gaussian blurred image of the Taj Mahal with ksize=8 and sigma=1</figcaption></figure></div><div id="2769c5d5-af7e-4fd7-8fa1-6dcb052f0d43" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80c4-9b48-f232b9e4c24a" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_hf.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_hf.png"/></a><figcaption>Figure 2.1.3: The high frequencies of the Taj Mahal</figcaption></figure></div></div><p id="10c0aaf5-eccb-8099-b5f3-f022f945cbf3" class="">While it is really faint, after subtracting the gaussian blurred image from the original, we get the image in Figure 2.2. Here we can see the outline of the Taj Mahal along with some other prominent details in the image. These are the features we want to amplify to sharpen the image. Our formula for doing so is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>h</mi><mi>a</mi><mi>r</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>d</mi><mi mathvariant="normal">_</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mo>=</mo><mi>o</mi><mi>r</mi><mi>i</mi><mi>g</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mo>+</mo><mi>α</mi><mtext> </mtext><mo>∗</mo><mi>h</mi><mi>f</mi><mi mathvariant="normal">_</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">sharpened\_ image = original\_ image + \alpha\ * hf\_image</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">ima</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">ina</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">ima</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">ima</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span></span></span></span></span><span>﻿</span></span>.</p><p id="10c0aaf5-eccb-80ea-9c0c-f0d79041d6ec" class="">Let’s look at the sharpening for different values of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></span><span>﻿</span></span>.</p><div id="10c0aaf5-eccb-809b-ad72-f01790bb072a" class="column-list"><div id="5de9fe4a-93f1-4cac-af25-98416367fb59" style="width:49.99999999999999%" class="column"><figure id="10c0aaf5-eccb-8085-81eb-e825b3f7f984" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a1.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a1.png"/></a><figcaption>Figure 2.1.4: Sharpened image for alpha=1</figcaption></figure></div><div id="c9e7aee1-ef5e-4a8a-924e-ea775ca56f36" style="width:49.99999999999999%" class="column"><figure id="10c0aaf5-eccb-80a6-a732-cf5f44e2759b" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a3.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a3.png"/></a><figcaption>Figure 2.1.5: Sharpened image for alpha=3</figcaption></figure><p id="10c0aaf5-eccb-80e6-80e9-f8ffedf7e1c5" class="">
+</p></div></div><div id="10c0aaf5-eccb-80ca-b992-f43fde46b8a1" class="column-list"><div id="10c0aaf5-eccb-8005-aa67-ee8a9fc14038" style="width:50%" class="column"><figure id="10c0aaf5-eccb-805e-b334-d61ea15e122b" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a5.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a5.png"/></a><figcaption>Figure 2.1.5: Sharpened image for alpha=5</figcaption></figure></div><div id="10c0aaf5-eccb-807f-bb23-eac54e5545a8" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8056-af7a-d0686d3a1452" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a10.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a10.png"/></a><figcaption>Figure 2.1.6: Sharpened image for alpha=10</figcaption></figure></div></div><figure id="10c0aaf5-eccb-805f-9fce-f85fb78794db" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a20.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_a20.png"/></a><figcaption>Figure 2.1.7: Sharpened image for alpha=20</figcaption></figure><p id="10c0aaf5-eccb-804a-ba8d-e50894f6f7de" class="">Out of the alpha values chosen for the different visualizations, alpha = 3 turned out to be the best sharpened image since it didn’t over-contrast the features while still yielding better results than the original.</p><figure id="10c0aaf5-eccb-803a-8fc9-efd2a963efee" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_comparision.png"><img style="width:552px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/taj_comparision.png"/></a><figcaption>Figure 2.1.8: The left image is the original image of the Taj Mahal and the right is the sharpened version for alpha = 3. We can see more definition in the overall structure of the building and the surroundings.</figcaption></figure><p id="10c0aaf5-eccb-80d6-a183-fae430c8adfc" class="">This process requires multiple steps to get to the end result of a sharpened image, but what if we can combine all of it into one filter that we convolve over. The name of this filter is the unsharp mask filter. Writing out the steps from above, we can rearrange the terms to get the definition of the unsharp mask filter. Applying a convolution over the image with this filter yields the extract results from before.</p><figure id="10c0aaf5-eccb-80b3-85a5-d686eb0988bd" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/Screenshot_2024-09-24_at_8.20.05_PM.png"><img style="width:2062px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/Screenshot_2024-09-24_at_8.20.05_PM.png"/></a><figcaption>                                                 Figure 2.1.9: Derivation for the unsharp mask filter</figcaption></figure><p id="10c0aaf5-eccb-805a-b8b9-d2bd38ccbff3" class="">Now, let’s try applying this filter to other images. To start, let’s do a similar analysis for a portrait of Lebron James, one of my favorite basketball players.</p><div id="10c0aaf5-eccb-8076-a2a2-d0b64bd9c7da" class="column-list"><div id="10c0aaf5-eccb-80de-9914-ed30be5caf91" style="width:100%" class="column"><figure id="10c0aaf5-eccb-8063-ad92-cbd8c916f077" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a1.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a1.png"/></a><figcaption>Figure 2.1.10: Sharpened using alpha = 1</figcaption></figure></div><div id="10c0aaf5-eccb-80fa-a249-ee54128e977c" style="width:100%" class="column"><figure id="10c0aaf5-eccb-8023-97c7-d533457f3a8c" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a3.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a3.png"/></a><figcaption>Figure 2.1.11: Sharpened using alpha = 3</figcaption></figure></div></div><div id="10c0aaf5-eccb-80e4-8a94-de2f720ea26e" class="column-list"><div id="8aae1245-5517-4e51-8bcd-e1bbb0520ce3" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80bf-8da8-d01424e1c523" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a5.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a5.png"/></a><figcaption>Figure 2.1.12: Sharpened using alpha = 5</figcaption></figure></div><div id="9d1405f9-93f4-4bf0-be26-dea4f9b0b243" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80a7-8a2a-ddb15143fcbb" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a10.png"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a10.png"/></a><figcaption>Figure 2.1.13: Sharpened using alpha = 10</figcaption></figure></div></div><figure id="10c0aaf5-eccb-80ef-b686-c1eac96ce2d8" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a20.png"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/lebron_a20.png"/></a><figcaption>Figure 2.1.14: Sharpened using alpha = 20</figcaption></figure><p id="10c0aaf5-eccb-803a-9ebb-d84a375f2ac9" class="">Here, we see very similar results, where the sharpened images for alpha = 3 and 5 turn out the best, meaning we would generally see the best results for those values. This portrait of lebron is starkly different from the Taj Mahal photo, both in the background and the subjects of the image, so even a sample size of 2 can give us a good idea at the potential of the unsharp mask filter.</p><p id="10c0aaf5-eccb-8003-b933-ccf47c52bfc7" class="">
+</p><p id="10c0aaf5-eccb-803c-b35b-ee4b7c54b9a3" class="">To evaluate our filter’s capabilities, let’s take a sharpened image, blur it using a gaussian filter, and then re-sharpen it back to the original state. First, similar to before, we can look at the sharpening abilities of the filter.</p><figure id="10c0aaf5-eccb-804b-92fe-ca5da82a445e" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/london_ots.png"><img style="width:707.96875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/london_ots.png"/></a><figcaption>Figure 2.1.15: Here we have the progression of the London building going from the original image (leftmost) to a blurred version (middle) to the final sharpened version (rightmost) using an alpha = 1.</figcaption></figure><p id="10c0aaf5-eccb-809d-9b7e-c9b488ab2915" class="">Even with an alpha value of 1, we can see a stark difference in the cleanliness and crispness of the building. In particular, we can see the reflection of the rest of London much more clearly in the windows of the building, which I thought was super cool! Below, we take the result of the sharpening, and put it through the process once again.</p><figure id="10c0aaf5-eccb-803a-9e41-e96d8e497121" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/london_sts.png"><img style="width:707.96875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/london_sts.png"/></a><figcaption>Figure 2.1.16: Here we have the progression of the London building going from the sharpened image (leftmost) to a blurred version (middle) to the final re-sharpened version (rightmost) using an alpha = 2.</figcaption></figure><p id="10c0aaf5-eccb-8023-95a7-efbce8dd34ca" class="">Here, we can see that the sharpening is able to reach the same result from before even after blurring, showing the robustness of this filter. One point to note was that the results were obtained with an alpha = 2 compared to alpha = 1 in the first case. Throughout both the Lebron James and London building explorations, we used a 2D Gaussian Filter with <code>ksize = 30</code> and <code>sigma = 5</code> to follow the <code>ksize = 6 * sigma</code> rule.</p><h2 id="10c0aaf5-eccb-809d-a100-d347581fe388" class="">2.2: <strong>Hybrid Images</strong></h2><p id="10c0aaf5-eccb-80e8-b716-e12226f3cef3" class="">In this section, we will be tackling Hybrid Images, an image that contains information for two different images at completely different frequencies. In other words, the image will look very different from close and further away.</p><p id="10c0aaf5-eccb-80f2-8cb8-f1e37bf11145" class="">Our example for this section with be Derek and the cat, Nutmeg.</p><div id="10c0aaf5-eccb-80f8-88c6-e738638fa655" class="column-list"><div id="1636bd3d-e4e1-44e9-8761-7ae8dc61e6d4" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80a1-9552-d85cfb6b8f35" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DerekPicture.jpg"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/DerekPicture.jpg"/></a><figcaption>Figure 2.2.1: Picture of Derek</figcaption></figure></div><div id="996ba132-cb9b-473d-b8ba-db73936ec2c7" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80d3-8d20-f6687df31776" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/nutmeg.jpg"><img style="width:331px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/nutmeg.jpg"/></a><figcaption>Figure 2.2.2: Picture of Nutmeg</figcaption></figure></div></div><p id="10c0aaf5-eccb-8069-b1f7-eefe45b813e1" class="">To create a hybrid image, we need to take the low frequencies of one image and average it with the high frequencies of the other image. This way both images will be captured in one image!<br/><br/></p><figure id="10c0aaf5-eccb-800b-af31-ffa7b767d89b" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek.png"><img style="width:304px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek.png"/></a><figcaption>Figure 2.2.3: Hybrid Image of Nutmeg and              Derek</figcaption></figure><p id="10c0aaf5-eccb-8082-8cef-e894f355ffbd" class="">
+</p><p id="10c0aaf5-eccb-80c7-a190-e82d844583de" class=""><strong>Bells and Whistles</strong>: Let’s look at how color can effect the hybrid image.</p><div id="10c0aaf5-eccb-8077-99df-f52e64d288ca" class="column-list"><div id="aff1fcca-c947-4647-901c-bd5343ffe547" style="width:33.33333333333333%" class="column"><figure id="10c0aaf5-eccb-8084-9a30-eac5e7bdfeed" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_both.png"><img style="width:205.3203125px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_both.png"/></a><figcaption>Figure 2.2.4: Hybrid Image where both images used have all RGB information</figcaption></figure></div><div id="8d0b8540-a7ab-46a5-b535-30dfe3a8581a" style="width:33.33333333333333%" class="column"><figure id="10c0aaf5-eccb-8093-a9be-f362c338a912" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_hf.png"><img style="width:205.3203125px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_hf.png"/></a><figcaption>Figure 2.2.5: Hybrid Image where only the high frequency image has RGB information</figcaption></figure></div><div id="6e3e57fc-1047-46f6-bea9-d979f9dd882d" style="width:33.33333333333333%" class="column"><figure id="10c0aaf5-eccb-80b7-9203-f5cace6da74c" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_lf.png"><img style="width:205.3203125px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_rgb_lf.png"/></a><figcaption>Figure 2.2.6: Hybrid Image where only the low frequency image has RGB information</figcaption></figure></div></div><p id="10c0aaf5-eccb-80d5-b448-fbe55049e1c7" class="">When the low frequency image (Derek) has color, the image becomes more clear at a distance, overshadowing the high frequency image even more than in the grayscale case. Other that that minor difference, there isn’t a major difference in how color impacts the overall effect of the hybrid image. The color in the high frequency image has little to no effect from what I can tell since the image is so faint to start off with, making the color an insignificant factor.</p><p id="10c0aaf5-eccb-8067-bfea-d3e6aa32fc36" class="">
+</p><p id="10c0aaf5-eccb-80ca-a855-c6df00c330ba" class="">Looking at the frequencies involved in this process, we can see some cool observations.</p><figure id="10c0aaf5-eccb-809f-8db2-d491d27ee486" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_freq.png"><img style="width:1614px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_nutmeg_Derek_freq.png"/></a><figcaption>      Figure 2.2.7: The frequencies for the images use throughout making the hybrid for Derek and Nutmeg</figcaption></figure><p id="10c0aaf5-eccb-80ce-a67c-e23892289d31" class="">We can see a clear difference between the frequencies between the original images and that of the specific aligned frequency images. For the high frequency image, most of the frequencies were kept; however, the sparsity in the plot is apparent compared to the original. The low frequency plot looks very different from the original as most of the frequencies seem to have been filtered out, meaning our low pass filter is working well. The final hybrid is an average of both, which isn’t as apparent to see, but the structure of the high frequency seems to be relatively clear.</p><p id="10c0aaf5-eccb-80f6-86f5-c2108c31a9a1" class="">
+</p><p id="10c0aaf5-eccb-8039-9429-c843679609ec" class="">Let’s look at other hybrid image pairs!</p><p id="10c0aaf5-eccb-804c-b01e-c5643689959f" class="">One of my favorite sports is basketball and as a GSW fan, I needed to create a hybrid image for Stephen Curry. Recently, another 3pt shooter has entered the scene, from the WNBA side, challenging Steph’s spot, Caitlin Clark. For this reason, I wanted to create a hybrid image with the two.</p><div id="10c0aaf5-eccb-80e6-b760-e98a8086c657" class="column-list"><div id="9b227508-b435-45ce-824f-38a29d2ced15" style="width:50%" class="column"><figure id="10c0aaf5-eccb-807c-a374-d22fad6aab62" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/curry_shot.jpg"><img style="width:1200px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/curry_shot.jpg"/></a><figcaption>    Figure 2.2.7: Original image of Stephen Curry</figcaption></figure></div><div id="eb49baa6-079f-4abb-9627-5c1a1aeca6f5" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80ac-b456-cde54b225581" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/clark.jpg"><img style="width:330.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/clark.jpg"/></a><figcaption>      Figure 2.2.8: Original Image of Caitlin Clark</figcaption></figure><p id="10c0aaf5-eccb-8058-9aa4-d786e969afae" class="">
+</p></div></div><figure id="10c0aaf5-eccb-80f9-b997-c11ac4589a25" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_steph_clark_2.png"><img style="width:353px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_steph_clark_2.png"/></a><figcaption>Figure 2.2.9: Hybrid Image of Stephen Curry (sigma = 10, ksize = 60, intensity=2) and Caitlin Clark (sigma = 15, ksize = 90)</figcaption></figure><p id="10c0aaf5-eccb-8006-a1d1-fd93f78ae875" class="">Let’s look at a similar frequency analysis for this image like that of the example case. We see a very similar if not exactly the same trend as the previous example.</p><figure id="10c0aaf5-eccb-809d-8cf0-f0438e9544d1" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_sc_frq.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_sc_frq.png"/></a></figure><p id="10c0aaf5-eccb-805a-b613-fe2767d93bd9" class="">
+</p><p id="10c0aaf5-eccb-802e-bb49-d2c84d620fda" class="">Another image pair I tried was my advising Professor Goldberg with another Professor in BAIR, Sergey Levine.</p><div id="10c0aaf5-eccb-8086-bd70-fc6da002f9ff" class="column-list"><div id="ea58213b-1103-46b5-aed9-eddd1ee6c860" style="width:50%" class="column"><figure id="10c0aaf5-eccb-807e-85f5-e5c1a94f10e2" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/goldberg.jpg"><img style="width:150px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/goldberg.jpg"/></a></figure></div><div id="4de1d1a4-081b-401b-ad08-83ae909055da" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80b1-841c-de9d68b70999" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/levine.jpg"><img style="width:150px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/levine.jpg"/></a></figure></div></div><figure id="10c0aaf5-eccb-80c5-817f-fa0fad18850b" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_goldlevine.png"><img style="width:353px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_goldlevine.png"/></a></figure><p id="10c0aaf5-eccb-8037-838b-e0299cd9c929" class="">
+</p><p id="10c0aaf5-eccb-8062-9aa8-f0c97abcf4fa" class="">Another pair I tried was to show the transformation of Biden over time; however, there aren’t too many RGB photos of Biden that were headshots, so the alignment of the present-day RGB photo with the old grayscale photo resulted in a bad hybrid image. To resolve this issue, there are image processing techniques that can be used to hopefully scale one image properly, so the relative sizes when overlayed stay relatively the same. Overall, just improving the alignment algorithm to make sure the hybrid image turns out better.</p><div id="10c0aaf5-eccb-8061-b721-d0d336420965" class="column-list"><div id="f64aaf04-e16d-469b-9186-07aa056e7c18" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8038-9276-f68167280caa" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/biden.jpg"><img style="width:331px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/biden.jpg"/></a></figure></div><div id="a50d3f1f-c79f-412a-80e5-69127a129653" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80d3-a408-d978b1a3c506" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ybiden.jpg"><img style="width:330.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ybiden.jpg"/></a></figure></div></div><figure id="10c0aaf5-eccb-806a-be7b-f96c00a2dd7a" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_biden.png"><img style="width:334px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/hybrid_biden.png"/></a></figure><h2 id="10c0aaf5-eccb-80db-baef-c123b18f55db" class="">2.3: <strong>Gaussian and Laplacian Stacks</strong></h2><p id="10c0aaf5-eccb-80a1-bd32-eedf547845ff" class="">The remainder of this project will be focusing on the blending of two images. To start on that task, we need to do some setup to enable blending in the next section. The setup we are talking about here is Gaussian and Lapcian Stacks. As our example, we will be trying to blend an apple and an orange:</p><div id="10c0aaf5-eccb-8001-a56a-fe899f661a6a" class="column-list"><div id="aaeca571-7f68-4b2c-8708-b379bf7c95e7" style="width:50.000000000000014%" class="column"><figure id="10c0aaf5-eccb-8056-9e31-d1819dad84c1" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/apple.jpeg"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/apple.jpeg"/></a><figcaption>Figure 2.3.1: The original apple image</figcaption></figure></div><div id="10c0aaf5-eccb-8073-8577-f59e7f761cda" style="width:50%" class="column"><figure id="10c0aaf5-eccb-809d-9eec-d92d6369370f" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/orange.jpeg"><img style="width:336px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/orange.jpeg"/></a><figcaption>Figure 2.3.2: The original orange image</figcaption></figure></div></div><p id="10c0aaf5-eccb-809a-a874-c241261ab13b" class="">A Gaussian Stack is a collection of consecutive Gaussian Blurs applied to the same image. Generally, this process is done in parallel with downsizing the image size to give us a Gaussian Pyramid. However, we can get around this by manipulating our blending mask later in the process. In other words, our Gaussian stack will be images of the same size, successively getting more and more blurry.</p><p id="10c0aaf5-eccb-80a4-ba67-e33f396ad3c9" class="">A Laplacian Stack is a collection of differential images containing differencing information between images in the Gaussian Stack. As a result, we can define one image in our Laplacian Stack, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">LS_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, to be <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mi>i</mi></msub><mtext> </mtext><mo>=</mo><mi>G</mi><msub><mi>S</mi><mi>i</mi></msub><mo>−</mo><mi>G</mi><msub><mi>S</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">LS_i\ = GS_{i} - GS_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><msub><mi>S</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">GS_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is the ith image in the Gaussian Stack. The edge case in this scenario is the last element of the Laplacian Stack which we would just set to be the last image in the Gaussian Stack. The resulting Gaussian and Laplacian Stacks for the apple and orange are below.</p><figure id="10c0aaf5-eccb-80aa-b6fb-dcd665bdfdfa" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_apple.png"><img style="width:2381px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_apple.png"/></a></figure><figure id="10c0aaf5-eccb-802a-8f88-fbe472e06a96" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_apple.png"><img style="width:2381px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_apple.png"/></a></figure><figure id="10c0aaf5-eccb-807e-acf1-f1cc6da8c1f8" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_orange.png"><img style="width:707.9765625px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_orange.png"/></a></figure><figure id="10c0aaf5-eccb-80c3-966c-d47015c13a2a" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_orange.png"><img style="width:2381px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_orange.png"/></a><figcaption>Figure 2.3.3: The Gaussian and Laplacian stacks for both the apple and orange (Row 1: GS for apple, Row 2: LS for apple, Row 3: GS for orange, Row 4: LS for orange). The Gaussian Stacks were created using ksize = 30 and sigma = 5.</figcaption></figure><p id="10c0aaf5-eccb-80be-a897-dc667e2f6d6c" class="">The first image in each of these stacks is the original image (either apple or orange), but each following image is where the formula for the Gaussian and Laplacian stacks is applied.</p><h2 id="10c0aaf5-eccb-80b7-9362-ffdf336f0308" class="">2.4: Multiresolution Blending (a.k.a. the Oraple!)</h2><p id="10c0aaf5-eccb-80e8-a304-c0f8ec4d4261" class="">Now that we have the Gaussian and Laplacian Stacks defined for each of the images, we can actually blend the two images with an external blending mask. For the apple and orange case, we want to blend the two images down the middle, so we can create a binary mask split down the middle with 1s on the left for the apple and 0s on the right for the orange. </p><p id="10c0aaf5-eccb-80a6-8ece-c789e6796940" class="">Earlier, we mentioned that we wanted to maintain simplicity with our Gaussian and Laplacian stacks, which meant that we lost some of the blending effects that come with downsizing images. Instead, we can create another Gaussian stack, this time for the binary mask we are using. The following Gaussian Stack was created using <code>ksize = 120</code> and <code>sigma = 20</code> to again follow the <code>ksize = 6 * sigma</code> rule.</p><figure id="10c0aaf5-eccb-80d1-9d54-df02baa7f7da" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask.png"><img style="width:707.953125px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask.png"/></a><figcaption>                     Figure 2.4.1: Gaussian Stack for the horizontal mask using ksize = 120 and sigma = 20</figcaption></figure><p id="10c0aaf5-eccb-80cf-aa13-de2917c74762" class="">With this Gaussian Stack, we can define a rule for each pixel in our output based on the pixels in our Laplacian stacks and mask. In other words, the ij-th pixel in our output image, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi></mrow><annotation encoding="application/x-tex">O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span></span></span></span></span><span>﻿</span></span>, at each level can be defined as:</p><figure id="10c0aaf5-eccb-8087-91bd-dd67190f7ba8" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>O</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mtext> </mtext><mo>=</mo><mtext> </mtext><mi>G</mi><msub><mi>S</mi><mrow><mi>m</mi><mi>a</mi><mi>s</mi><mi>k</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub><mo>∗</mo><mi>L</mi><msub><mi>S</mi><mrow><mi>A</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub><mtext> </mtext><mo>+</mo><mtext> </mtext><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>G</mi><msub><mi>S</mi><mrow><mi>m</mi><mi>a</mi><mi>s</mi><mi>k</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub><mo stretchy="false">)</mo><mo>∗</mo><mi>L</mi><msub><mi>S</mi><mrow><mi>B</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">O_{ij}\ =\ GS_{mask,ij} * LS_{A,ij}\ +\ (1 - GS_{mask,ij}) * LS_{B,ij} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="10c0aaf5-eccb-80c0-8b4b-ea28d04780b9" class="">where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><msub><mi>S</mi><mrow><mi>m</mi><mi>a</mi><mi>s</mi><mi>k</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">GS_{mask,ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">G</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is the pixel located at (i,j) in the mask image from the Gaussian Stack and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mrow><mi>A</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">LS_{A,ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mrow><mi>B</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">LS_{B,ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> are the pixels located at (i,j) in the respective images from each Laplacian Stack for the images that need to be blended. In our case, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mrow><mi>A</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">LS_{A,ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is the Laplacian Stack for the apple and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>S</mi><mrow><mi>B</mi><mo separator="true">,</mo><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">LS_{B,ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is the Laplacian Stack for the orange. Using this formula across all three channels for each level gives us the following result.</p><figure id="10c0aaf5-eccb-8039-85e5-c796092e9a35" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_apple_orange.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_apple_orange.png"/></a><figcaption>    Figure 2.4.2: The level-by-level blended stack of the apple and orange combined with a horizontal mask</figcaption></figure><p id="10c0aaf5-eccb-80bf-a788-eecd5618f4aa" class="">This figure is a recreation of the Figure 3.42 in Szelski (Ed 2) page 167 with more information between the levels that weren’t shown for a full picture. In the end, the final blended picture we get is the following:</p><figure id="10c0aaf5-eccb-8062-aa68-ff90ae12efa9" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_ao.png"><img style="width:477px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_ao.png"/></a><figcaption>                        Figure 2.4.3: Final blended image for the oraple!</figcaption></figure><p id="10c0aaf5-eccb-8002-a7ad-c1acaa7b3922" class="">Now that we have an output for the oraple, let’s apply this process to other images! The first example I wanted to explore was a vertical blending compared to the horizontal blending we did with the oraple. For this task, I chose a rocket ship and fish as I thought the general shapes of the two were similar while almost nothing to do with each other.</p><div id="10c0aaf5-eccb-80dd-a1c8-c53b66e7a4ab" class="column-list"><div id="222a57ca-a47d-4b5e-b511-d00253712117" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8043-bfa3-ce22bd504a20" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/rocket_resized.png"><img style="width:311px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/rocket_resized.png"/></a><figcaption>Figure 2.4.4: Original image of rocket ship</figcaption></figure><p id="10c0aaf5-eccb-8029-b6f8-d2a6f7be5014" class="">
+</p></div><div id="0d1e9566-6993-46f5-8cca-7eba5c478212" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80d5-980e-e864c208554f" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/fish_resized.png"><img style="width:311px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/fish_resized.png"/></a><figcaption>Figure 2.4.5: Original image of fish</figcaption></figure></div></div><p id="10c0aaf5-eccb-802c-b46f-eb2519ac99ef" class="">As we did before, let’s start by creating the Gaussian and Laplacian Stacks for each.</p><figure id="10c0aaf5-eccb-80ff-bdf0-ff82204ed55f" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_rocket_fish.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_rocket_fish.png"/></a></figure><figure id="10c0aaf5-eccb-800d-af68-d06fa5abc8b8" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_rocket_fish.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_rocket_fish.png"/></a><figcaption>Figure 2.4.7: Gaussian and Laplacian Stacks for both the rocket and fish with ksize = 18 and sigma = 3. (Row 1: GS for rocket, Row 2: GS for fish, Row 3: LS for rocket, Row 4: LS for fish)</figcaption></figure><p id="10c0aaf5-eccb-8046-a5eb-dbbe958b2992" class="">Next, let’s create our mask for blending, this time for a vertical blend, and its corresponding Gaussian Stack.</p><figure id="10c0aaf5-eccb-80bc-ada0-d4c58608eee9" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask_rf.png"><img style="width:707.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask_rf.png"/></a><figcaption>                  Figure 2.4.8: The Gaussian Stack of the vertical mask using ksize = 18 and sigma = 3</figcaption></figure><p id="10c0aaf5-eccb-804b-88f0-f637aaef58c7" class="">Lastly, let’s blend the images together!</p><figure id="10c0aaf5-eccb-8087-ac5f-c7c1f5ab720a" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_rocket_fish.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_rocket_fish.png"/></a><figcaption>    Figure 2.4.9: The level by level blended image stack of both the rocket and fish using the vertical mask</figcaption></figure><p id="10c0aaf5-eccb-8034-8d8c-d96a2d0e03f8" class="">The final blended image look like:</p><figure id="10c0aaf5-eccb-8029-9357-ec371fd9ee4f" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_rf.png"><img style="width:311px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_rf.png"/></a><figcaption>      Figure 2.4.10: Final rocket fish Image</figcaption></figure><p id="10c0aaf5-eccb-8005-88e6-d207073cf2b2" class="">While there is some blending with the images, the output is not as ideal as expected given the results of the apple orange blend. I tinkered with the ksize and sigma values for each of the gaussian stacks but the results stayed relatively the same, so it seems that the blending wasn’t ideal for other reasons. One reason could be the stark differences in background and noise for each individual image.</p><p id="10c0aaf5-eccb-8003-8d88-d5e35c9564e4" class="">Let’s do one last blending that takes a look at an irregular mask. This time I wanted to combine two landscapes together, so I chose to combine a city skyline with a image of scattered space dust.</p><div id="10c0aaf5-eccb-803a-872e-f76134700f9c" class="column-list"><div id="7db4c344-fb6b-414e-acb3-b40e6e97a70d" style="width:50%" class="column"><figure id="10c0aaf5-eccb-8035-9bb4-e6472b6b2660" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/skyline_final.png"><img style="width:330.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/skyline_final.png"/></a><figcaption>        Figure 2.4.11: Original city skyline image</figcaption></figure></div><div id="431c1dee-5f8b-4362-a785-c08c288ef064" style="width:50%" class="column"><figure id="10c0aaf5-eccb-80c7-b1c5-de064caf14f5" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/space_final.png"><img style="width:330.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/space_final.png"/></a><figcaption>             Figure 2.4.12: Original space image</figcaption></figure></div></div><p id="10c0aaf5-eccb-804c-91b5-df82c5f6b9a6" class="">Like before, let’s start by creating the Gaussian and Laplacian Stacks for each.</p><figure id="10c0aaf5-eccb-802a-844d-d172a2af4981" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_sky_space.png"><img style="width:707.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_sky_space.png"/></a></figure><figure id="10c0aaf5-eccb-80ee-86d2-dabdf3fbff43" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_sky_space.png"><img style="width:707.9921875px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/ls_sky_space.png"/></a><figcaption>Figure 2.4.13: Gaussian and Laplacian Stacks for both the city skyline and space with ksize = 36 and sigma = 6. (Row 1: GS for space, Row 2: GS for city skyline, Row 3: LS for space, Row 4: LS for city skyline)</figcaption></figure><p id="10c0aaf5-eccb-8086-b5b9-d75f13291d43" class="">Next, let’s create our mask for blending, this time for an irregular mask, and its corresponding Gaussian Stack. I created the mask using photoshop, and then followed the same image processing steps afterward.</p><figure id="10c0aaf5-eccb-8072-b772-d0f2817c5cca" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask_ss.png"><img style="width:707.984375px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/gs_mask_ss.png"/></a><figcaption>              Figure 2.4.14: Gaussian Stack of the irregular skyline mask using ksize = 36 and sigma = 6</figcaption></figure><p id="10c0aaf5-eccb-806d-8a4c-c2acbd1b9e44" class="">Lastly, let’s blend the images together!</p><figure id="10c0aaf5-eccb-8090-9a16-e26009f8a5ab" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_sky_space.png"><img style="width:707.9765625px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_sky_space.png"/></a><figcaption>Figure 2.4.15: The level-by-level blended image of both the skyline and space using the irregular mask defined in 2.4.14</figcaption></figure><p id="10c0aaf5-eccb-801e-b6a0-d96c2f050da4" class="">The final blended image look like:</p><figure id="10c0aaf5-eccb-8029-b1a8-eeb738676a7e" class="image"><a href="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_ss.png"><img style="width:629px" src="Project%202%20Fun%20with%20Filters%20and%20Frequencies!%2010c0aaf5eccb80bf923ef5921f055e8a/blended_final_ss.png"/></a><figcaption>                     Figure 2.4.16: The final blended image for the city skyline with space</figcaption></figure><p id="10c0aaf5-eccb-806f-908f-f16f7426b9bb" class="">I really love this image because of the ethereal look of the blend and how harmoniously the two images blend together.</p><h2 id="10c0aaf5-eccb-801f-86b0-f69422254815" class="">Conclusion</h2><p id="10c0aaf5-eccb-8041-a1c6-c8e5df8c551b" class="">
+</p><p id="10c0aaf5-eccb-8096-8988-e20691510d5e" class="">
+</p><p id="10c0aaf5-eccb-80e3-90dd-fda25f02f613" class="">
+</p><p id="10c0aaf5-eccb-80d4-903a-ed51ebec5ffd" class="">
+</p><p id="10c0aaf5-eccb-8000-9e1e-da9c60c6a50d" class="">
+</p><p id="10c0aaf5-eccb-8000-81a9-de370e50ce82" class="">
+</p><p id="10c0aaf5-eccb-80cc-95a4-ee84c3deae1e" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
